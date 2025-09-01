@@ -1,0 +1,98 @@
+08-31 18:20:11.810 [    main] INFO | org.springframework.boot.StartupInfoLogger.logStarting:51 Starting JiraRushApplication using Java 17.0.11 with PID 67136 (/Users/pavel/JRUIronmaiden/com.javarush.ivanovpavel.final5/target/classes started by pavel in /Users/pavel/JRUIronmaiden/com.javarush.ivanovpavel.final5)
+08-31 18:20:11.813 [    main] INFO | org.springframework.boot.SpringApplication.logStartupProfileInfo:636 The following 1 profile is active: "prod"
+08-31 18:20:12.136 [    main] INFO | o.s.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn:138 Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+08-31 18:20:12.180 [    main] INFO | o.s.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn:208 Finished Spring Data repository scanning in 40 ms. Found 11 JPA repository interfaces.
+08-31 18:20:12.441 [    main] INFO | o.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize:108 Tomcat initialized with port(s): 8080 (http)
+08-31 18:20:12.444 [    main] INFO | org.apache.juli.logging.DirectJDKLog.log:173 Starting service [Tomcat]
+08-31 18:20:12.444 [    main] INFO | org.apache.juli.logging.DirectJDKLog.log:173 Starting Servlet engine: [Apache Tomcat/10.1.5]
+08-31 18:20:12.477 [    main] INFO | org.apache.juli.logging.DirectJDKLog.log:173 Initializing Spring embedded WebApplicationContext
+08-31 18:20:12.477 [    main] INFO | o.s.b.web.servlet.context.ServletWebServerApplicationContext.prepareWebApplicationContext:291 Root WebApplicationContext: initialization completed in 648 ms
+08-31 18:20:12.572 [    main] INFO | com.zaxxer.hikari.HikariDataSource.getConnection:110 HikariPool-1 - Starting...
+08-31 18:20:12.627 [    main] INFO | com.zaxxer.hikari.pool.HikariPool.checkFailFast:565 HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4b5798c2
+08-31 18:20:12.628 [    main] INFO | com.zaxxer.hikari.HikariDataSource.getConnection:123 HikariPool-1 - Start completed.
+08-31 18:20:12.679 [    main] INFO | liquibase.logging.core.JavaLogger.log:36 Set default schema name to public
+08-31 18:20:12.709 [    main] INFO | liquibase.logging.core.JavaLogger.log:36 Successfully acquired change log lock
+08-31 18:20:12.754 [    main] INFO | liquibase.logging.core.JavaLogger.log:36 Reading from public.databasechangelog
+08-31 18:20:12.776 [    main] INFO | liquibase.logging.core.JavaLogger.log:36 Successfully released change log lock
+08-31 18:20:12.805 [    main] INFO | org.hibernate.jpa.internal.util.LogHelper.logPersistenceUnitInformation:31 HHH000204: Processing PersistenceUnitInfo [name: default]
+08-31 18:20:12.820 [    main] INFO | org.hibernate.Version.logVersion:44 HHH000412: Hibernate ORM core version 6.1.6.Final
+08-31 18:20:12.870 [    main] WARN | o.h.b.i.MetadataBuilderImpl$MetadataBuildingOptionsImpl.lambda$new$1:626 HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+08-31 18:20:12.914 [    main] INFO | o.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.logSelectedDialect:66 HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+08-31 18:20:13.303 [    main] INFO | o.h.e.transaction.jta.platform.internal.JtaPlatformInitiator.initiateService:51 HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+08-31 18:20:13.307 [    main] INFO | o.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory:437 Initialized JPA EntityManagerFactory for persistence unit 'default'
+08-31 18:20:13.692 [    main] WARN | o.springframework.context.support.AbstractApplicationContext.refresh:592 Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'restAuthenticationEntryPoint' defined in file [/Users/pavel/JRUIronmaiden/com.javarush.ivanovpavel.final5/target/classes/com/javarush/jira/common/internal/config/RestAuthenticationEntryPoint.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration': Unsatisfied dependency expressed through method 'setConfigurers' parameter 0: Error creating bean with name 'org.springframework.security.config.annotation.web.configuration.OAuth2ClientConfiguration$OAuth2ClientWebMvcSecurityConfiguration': Unsatisfied dependency expressed through method 'setClientRegistrationRepository' parameter 0: Error creating bean with name 'clientRegistrationRepository' defined in class path resource [org/springframework/boot/autoconfigure/security/oauth2/client/servlet/OAuth2ClientRegistrationRepositoryConfiguration.class]: Unsatisfied dependency expressed through method 'clientRegistrationRepository' parameter 0: Error creating bean with name 'spring.security.oauth2.client-org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties': Could not bind properties to 'OAuth2ClientProperties' : prefix=spring.security.oauth2.client, ignoreInvalidFields=false, ignoreUnknownFields=true
+08-31 18:20:13.693 [    main] INFO | o.springframework.orm.jpa.AbstractEntityManagerFactoryBean.destroy:650 Closing JPA EntityManagerFactory for persistence unit 'default'
+08-31 18:20:13.694 [    main] INFO | com.zaxxer.hikari.HikariDataSource.close:350 HikariPool-1 - Shutdown initiated...
+08-31 18:20:13.696 [    main] INFO | com.zaxxer.hikari.HikariDataSource.close:352 HikariPool-1 - Shutdown completed.
+08-31 18:20:13.696 [    main] INFO | org.apache.juli.logging.DirectJDKLog.log:173 Stopping service [Tomcat]
+08-31 18:20:13.701 [    main] INFO | o.s.b.autoconfigure.logging.ConditionEvaluationReportLogger.logMessage:82 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+08-31 18:20:13.707 [    main] ERROR| o.s.boot.diagnostics.LoggingFailureAnalysisReporter.report:40 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under 'spring.security.oauth2.client.registration.github.client-id' to java.lang.String:
+
+    Property: spring.security.oauth2.client.registration.github.client-id
+    Value: "${github_client_id}"
+    Origin: class path resource [application.yaml] - 57:24
+    Reason: java.lang.IllegalArgumentException: Could not resolve placeholder 'GITHUB_CLIENT_ID' in value "${GITHUB_CLIENT_ID}"
+
+Action:
+
+Update your application's configuration
+
+08-31 18:20:17.908 [    main] INFO | org.springframework.boot.StartupInfoLogger.logStarting:51 Starting JiraRushApplication using Java 17.0.11 with PID 67144 (/Users/pavel/JRUIronmaiden/com.javarush.ivanovpavel.final5/target/classes started by pavel in /Users/pavel/JRUIronmaiden/com.javarush.ivanovpavel.final5)
+08-31 18:20:17.912 [    main] INFO | org.springframework.boot.SpringApplication.logStartupProfileInfo:636 The following 1 profile is active: "prod"
+08-31 18:20:18.196 [    main] INFO | o.s.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn:138 Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+08-31 18:20:18.230 [    main] INFO | o.s.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn:208 Finished Spring Data repository scanning in 32 ms. Found 11 JPA repository interfaces.
+08-31 18:20:18.433 [    main] INFO | o.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize:108 Tomcat initialized with port(s): 8080 (http)
+08-31 18:20:18.436 [    main] INFO | org.apache.juli.logging.DirectJDKLog.log:173 Starting service [Tomcat]
+08-31 18:20:18.437 [    main] INFO | org.apache.juli.logging.DirectJDKLog.log:173 Starting Servlet engine: [Apache Tomcat/10.1.5]
+08-31 18:20:18.458 [    main] INFO | org.apache.juli.logging.DirectJDKLog.log:173 Initializing Spring embedded WebApplicationContext
+08-31 18:20:18.458 [    main] INFO | o.s.b.web.servlet.context.ServletWebServerApplicationContext.prepareWebApplicationContext:291 Root WebApplicationContext: initialization completed in 530 ms
+08-31 18:20:18.542 [    main] INFO | com.zaxxer.hikari.HikariDataSource.getConnection:110 HikariPool-1 - Starting...
+08-31 18:20:18.593 [    main] INFO | com.zaxxer.hikari.pool.HikariPool.checkFailFast:565 HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4e2cdc51
+08-31 18:20:18.593 [    main] INFO | com.zaxxer.hikari.HikariDataSource.getConnection:123 HikariPool-1 - Start completed.
+08-31 18:20:18.638 [    main] INFO | liquibase.logging.core.JavaLogger.log:36 Set default schema name to public
+08-31 18:20:18.671 [    main] INFO | liquibase.logging.core.JavaLogger.log:36 Successfully acquired change log lock
+08-31 18:20:18.719 [    main] INFO | liquibase.logging.core.JavaLogger.log:36 Reading from public.databasechangelog
+08-31 18:20:18.740 [    main] INFO | liquibase.logging.core.JavaLogger.log:36 Successfully released change log lock
+08-31 18:20:18.766 [    main] INFO | org.hibernate.jpa.internal.util.LogHelper.logPersistenceUnitInformation:31 HHH000204: Processing PersistenceUnitInfo [name: default]
+08-31 18:20:18.778 [    main] INFO | org.hibernate.Version.logVersion:44 HHH000412: Hibernate ORM core version 6.1.6.Final
+08-31 18:20:18.815 [    main] WARN | o.h.b.i.MetadataBuilderImpl$MetadataBuildingOptionsImpl.lambda$new$1:626 HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+08-31 18:20:18.852 [    main] INFO | o.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.logSelectedDialect:66 HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+08-31 18:20:19.197 [    main] INFO | o.h.e.transaction.jta.platform.internal.JtaPlatformInitiator.initiateService:51 HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+08-31 18:20:19.200 [    main] INFO | o.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory:437 Initialized JPA EntityManagerFactory for persistence unit 'default'
+08-31 18:20:19.542 [    main] WARN | o.springframework.context.support.AbstractApplicationContext.refresh:592 Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'restAuthenticationEntryPoint' defined in file [/Users/pavel/JRUIronmaiden/com.javarush.ivanovpavel.final5/target/classes/com/javarush/jira/common/internal/config/RestAuthenticationEntryPoint.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration': Unsatisfied dependency expressed through method 'setConfigurers' parameter 0: Error creating bean with name 'org.springframework.security.config.annotation.web.configuration.OAuth2ClientConfiguration$OAuth2ClientWebMvcSecurityConfiguration': Unsatisfied dependency expressed through method 'setClientRegistrationRepository' parameter 0: Error creating bean with name 'clientRegistrationRepository' defined in class path resource [org/springframework/boot/autoconfigure/security/oauth2/client/servlet/OAuth2ClientRegistrationRepositoryConfiguration.class]: Unsatisfied dependency expressed through method 'clientRegistrationRepository' parameter 0: Error creating bean with name 'spring.security.oauth2.client-org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties': Could not bind properties to 'OAuth2ClientProperties' : prefix=spring.security.oauth2.client, ignoreInvalidFields=false, ignoreUnknownFields=true
+08-31 18:20:19.543 [    main] INFO | o.springframework.orm.jpa.AbstractEntityManagerFactoryBean.destroy:650 Closing JPA EntityManagerFactory for persistence unit 'default'
+08-31 18:20:19.543 [    main] INFO | com.zaxxer.hikari.HikariDataSource.close:350 HikariPool-1 - Shutdown initiated...
+08-31 18:20:19.545 [    main] INFO | com.zaxxer.hikari.HikariDataSource.close:352 HikariPool-1 - Shutdown completed.
+08-31 18:20:19.545 [    main] INFO | org.apache.juli.logging.DirectJDKLog.log:173 Stopping service [Tomcat]
+08-31 18:20:19.550 [    main] INFO | o.s.b.autoconfigure.logging.ConditionEvaluationReportLogger.logMessage:82 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+08-31 18:20:19.555 [    main] ERROR| o.s.boot.diagnostics.LoggingFailureAnalysisReporter.report:40 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under 'spring.security.oauth2.client.registration.github.client-id' to java.lang.String:
+
+    Property: spring.security.oauth2.client.registration.github.client-id
+    Value: "${github_client_id}"
+    Origin: class path resource [application.yaml] - 57:24
+    Reason: java.lang.IllegalArgumentException: Could not resolve placeholder 'GITHUB_CLIENT_ID' in value "${GITHUB_CLIENT_ID}"
+
+Action:
+
+Update your application's configuration
+

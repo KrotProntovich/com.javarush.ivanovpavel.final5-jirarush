@@ -1,0 +1,65 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: jirarush
+    container_name: jira
+    volumes:
+      - ./config/secret.properties:/app/config/secret.properties
+      - ./src/main/resources:/app/resources
+    environment:
+      - SPRING_CONFIG_LOCATION=file:/app/config/
+      - LIQUIBASE_CHANGE_LOG=classpath:db/changelog/db.changelog-master.yaml
+      - DATASOURCE_URL=jdbc:postgresql://${DB_HOST:jira-db}:${DB_PORT:5432}/${DB_NAME:jira}
+      - DATASOURCE_USERNAME=${DB_USER:jira}
+      - DATASOURCE_PASSWORD=${DB_PASSWORD:JiraRush}
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    networks:
+      - new-network
+
+  db:
+    image: postgres:17
+    container_name: jira-db
+    environment:
+      POSTGRES_USER: ${DB_USER:jira}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:JiraRush}
+      POSTGRES_DB: ${DB_NAME:jira}
+
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jira -d jira -p 5432"]
+      interval: 10s
+      timeout: 5s
+      start_period: 30s
+      retries: 5
+    networks:
+      - new-network
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
+    networks:
+      - new-network
+
+networks:
+  new-network:
+    driver: bridge
+
+
+volumes:
+  postgres-data:
+    driver: local

@@ -1,0 +1,120 @@
+#  https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+app:
+  host-url: http://localhost:8080
+  test-mail: jira4jr@gmail.com
+  templates-update-cache: 5s
+  mail-sending-props:
+    core-pool-size: 8
+    max-pool-size: 100
+
+spring:
+  config:
+    import: "optional:file:/app/config/secret.properties"
+  cloud:
+    config:
+      enabled: true
+  init:
+    mode: never
+  jpa:
+    show-sql: true
+    open-in-view: false
+
+    # validate db by model
+    hibernate:
+      ddl-auto: validate
+
+    properties:
+      #  http://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#configurations
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 20
+        # https://stackoverflow.com/questions/21257819/what-is-the-difference-between-hibernate-jdbc-fetch-size-and-hibernate-jdbc-batc
+        jdbc.batch_size: 20
+  datasource:
+    url: jdbc:postgresql://${db_host:localhost}:${db_port:5432}/${db_name:jira}
+    username: ${db_user:jira}
+    password: ${db_password:JiraRush}
+    driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+#    change-log: classpath:db/changelog.sql
+
+  # Jackson Fields Serialization
+  jackson:
+    visibility:
+      field: any
+      getter: none
+      setter: none
+      is-getter: none
+
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties-cache
+  cache:
+    cache-names: users
+    caffeine.spec: maximumSize=10000,expireAfterAccess=5m
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${github_client_id}
+            client-secret: ${github_client_secret}
+            scope:
+              - email
+          google:
+            client-id: ${google_client_id}
+            client-secret: ${google_client_secret}
+            scope:
+              - profile
+              - email
+          gitlab:
+            client-id: ${gitlab_client_id}
+            client-secret: ${gitlab_client_secret}
+            client-name: ${gitlab_client_name}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            scope: read_user
+        provider:
+          gitlab:
+            authorization-uri: https://gitlab.com/oauth/authorize
+            token-uri: https://gitlab.com/oauth/token
+            user-info-uri: https://gitlab.com/api/v4/user
+            user-name-attribute: email
+
+  sql:
+    init:
+      mode: always
+
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+    host: smtp.gmail.com
+    username: ${mail_user:jira4jr@gmail.com}
+    password: ${mail_password:zdfzsrqvgimldzyj}
+    port: ${mail_port:587}
+  thymeleaf.check-template-location: false
+
+  mvc.throw-exception-if-no-handler-found: true
+  web.resources.add-mappings: false
+
+logging:
+  level:
+    root: INFO
+    com.javarush.jira: INFO
+    com.javarush.jira.common.config.MvcConfig: INFO
+    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: INFO
+
+server:
+  #  https://springdoc.org/index.html#how-can-i-deploy-springdoc-openapi-ui-behind-a-reverse-proxy
+  forward-headers-strategy: framework
+  servlet:
+    encoding:
+      charset: UTF-8 # Charset of HTTP requests and responses. Added to the "Content-Type" header if not set explicitly
+      enabled: true # Enable http encoding support
+      force: true
+springdoc.swagger-ui.path: /doc
