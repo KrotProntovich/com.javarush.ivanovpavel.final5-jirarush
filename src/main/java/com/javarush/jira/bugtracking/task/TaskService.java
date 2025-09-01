@@ -142,6 +142,7 @@ public class TaskService {
         }
     }
 
+    @Transactional
     public void addTags(long id, Set<String> tags) {
         Task task = Util.checkExist(id, handler.getRepository().findFullById(id));
         task.setTags(tags);
