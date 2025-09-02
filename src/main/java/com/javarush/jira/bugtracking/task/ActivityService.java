@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 import static com.javarush.jira.bugtracking.task.TaskUtil.getLatestValue;
@@ -72,5 +75,38 @@ public class ActivityService {
                 task.setTypeCode(latestType);
             }
         }
+    }
+
+    public String howLongTaskInProgress(long taskId) {
+        Activity activityInProgress = handler.getRepository().findByTaskIdAndStatusCode(taskId, "in_progress");
+        Activity activityReadyForReview = handler.getRepository().findByTaskIdAndStatusCode(taskId, "ready_for_review");
+        if (activityInProgress != null && activityReadyForReview != null) {
+            LocalDateTime taskStart = activityInProgress.getTaskStart();
+            LocalDateTime developmentCompletion = activityReadyForReview.getDevelopmentCompletion();
+            return timeCounting(taskStart, developmentCompletion);
+        }
+        return "The task does not exist or it is in progress";
+    }
+
+    public String howLongTaskInTesting(long taskId) {
+        Activity activityReadyForReview = handler.getRepository().findByTaskIdAndStatusCode(taskId, "ready_for_review");
+        Activity activityDone = handler.getRepository().findByTaskIdAndStatusCode(taskId, "done");
+        if(activityReadyForReview != null && activityDone != null) {
+            LocalDateTime developmentCompletion = activityReadyForReview.getDevelopmentCompletion();
+            LocalDateTime testingCompletion = activityDone.getDevelopmentCompletion();
+            return timeCounting(developmentCompletion, testingCompletion);
+        }
+        return "The task does not exist or it is in the testing stage";
+    }
+
+    private String timeCounting (LocalDateTime start, LocalDateTime end) {
+        long startMillis = start.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long endMillis = end.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+
+        long resultMillis = endMillis - startMillis;
+        System.out.println(resultMillis);
+
+        LocalDateTime result = Instant.ofEpochMilli(resultMillis).atZone(ZoneId.systemDefault()).toLocalDateTime();
+        return "Month:" + (result.getMonth().getValue()-1) + ", Day:" + (result.getDayOfMonth()-1) + ", Hour:" + result.getHour() + ", Minute:" + result.getMinute();
     }
 }

@@ -146,9 +146,9 @@ create table ACTIVITY
     TYPE_CODE     varchar(32),
     STATUS_CODE   varchar(32),
     PRIORITY_CODE varchar(32),
-    IN_PROGRESS varchar(32),
-    READY_FOR_REVIEV varchar(32),
-    DONE varchar(32),
+    TASK_START_TIME timestamp,
+    DEVELOPMENT_COMPLETION_TIME timestamp,
+    TESTING_COMPLETION_TIME timestamp,
     constraint FK_ACTIVITY_USERS foreign key (AUTHOR_ID) references USERS (ID),
     constraint FK_ACTIVITY_TASK foreign key (TASK_ID) references TASK (ID) on delete cascade
 );

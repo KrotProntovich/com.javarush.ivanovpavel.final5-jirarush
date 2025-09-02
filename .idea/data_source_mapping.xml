@@ -2,6 +2,7 @@
 <project version="4">
   <component name="DataSourcePerFileMappings">
     <file url="file://$PROJECT_DIR$/src/main/resources/data4dev/data.sql" value="a372da6f-9735-46d4-8e58-ac45bf5f0a90" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/changelog.sql" value="a372da6f-9735-46d4-8e58-ac45bf5f0a90" />
     <file url="file://$PROJECT_DIR$/src/test/resources/data.sql" value="eb46fdf5-8cc1-4605-b07b-a880197c6b2c" />
   </component>
 </project>
