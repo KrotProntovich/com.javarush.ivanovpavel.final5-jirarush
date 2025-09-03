@@ -11,5 +11,7 @@ FROM eclipse-temurin:17-jdk
 WORKDIR /app
 COPY --from=builder /app/target/jira-1.0.jar .
 COPY src/main/resources/ resources/
+COPY resources/ resources/
+COPY config/ config/
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "jira-1.0.jar"]
