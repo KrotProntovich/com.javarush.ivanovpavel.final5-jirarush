@@ -3,10 +3,7 @@ package com.javarush.jira.bugtracking.task;
 import com.javarush.jira.bugtracking.Handlers;
 import com.javarush.jira.bugtracking.UserBelong;
 import com.javarush.jira.bugtracking.UserBelongRepository;
-import com.javarush.jira.bugtracking.task.to.ActivityTo;
-import com.javarush.jira.bugtracking.task.to.TaskTo;
-import com.javarush.jira.bugtracking.task.to.TaskToExt;
-import com.javarush.jira.bugtracking.task.to.TaskToFull;
+import com.javarush.jira.bugtracking.task.to.*;
 import com.javarush.jira.bugtracking.tree.ITreeNode;
 import com.javarush.jira.common.util.Util;
 import com.javarush.jira.login.AuthUser;
@@ -162,4 +159,12 @@ public class TaskController {
         Set<String> tagSet = new HashSet<>(Arrays.asList(tags.split(",")));
         taskService.addTags(id,tagSet);
     }
+
+    @GetMapping(value = "/{id}/time")
+    public ResponseEntity<TimeTo> timeSpentCalculation (@PathVariable long id, @NotBlank @RequestParam String statusCode1, @NotBlank @RequestParam String statusCode2) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(activityService.timeSpentCalculation(id, statusCode1, statusCode2));
+    }
+
 }

@@ -2,15 +2,19 @@ package com.javarush.jira.bugtracking.task;
 
 import com.javarush.jira.bugtracking.Handlers;
 import com.javarush.jira.bugtracking.task.to.ActivityTo;
+import com.javarush.jira.bugtracking.task.to.TimeTo;
 import com.javarush.jira.common.error.DataConflictException;
 import com.javarush.jira.login.AuthUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.javarush.jira.bugtracking.task.TaskUtil.getLatestValue;
@@ -77,36 +81,35 @@ public class ActivityService {
         }
     }
 
-    public String howLongTaskInProgress(long taskId) {
-        Activity activityInProgress = handler.getRepository().findByTaskIdAndStatusCode(taskId, "in_progress");
-        Activity activityReadyForReview = handler.getRepository().findByTaskIdAndStatusCode(taskId, "ready_for_review");
-        if (activityInProgress != null && activityReadyForReview != null) {
-            LocalDateTime taskStart = activityInProgress.getTaskStart();
-            LocalDateTime developmentCompletion = activityReadyForReview.getDevelopmentCompletion();
-            return timeCounting(taskStart, developmentCompletion);
+    public TimeTo timeSpentCalculation(long taskId, String statusCode1, String statusCode2) {
+        List<Activity> activities1 = handler.getRepository().findByTaskIdAndStatusCode(taskId, statusCode1);
+        List<Activity> activities2 = handler.getRepository().findByTaskIdAndStatusCode(taskId, statusCode2);
+        if(activities1.isEmpty() || activities2.isEmpty() || activities1.size() != activities2.size()) {
+           throw new RuntimeException("The task does not exist or the process is not finished");
         }
-        return "The task does not exist or it is in progress";
+        List<LocalDateTime> inStatusCode1 = new ArrayList<>();
+        List<LocalDateTime> inStatusCode2 = new ArrayList<>();
+        switch (statusCode1){
+            case "in_progress":
+                activities1.forEach(activity -> {inStatusCode1.add(activity.getTaskStart());});
+                activities2.forEach(activity -> {inStatusCode2.add(activity.getDevelopmentCompletion());});
+                break;
+            case "ready_for_review":
+                activities1.forEach(activity -> {inStatusCode1.add(activity.getDevelopmentCompletion());});
+                activities2.forEach(activity -> {inStatusCode2.add(activity.getTestingCompletion());});
+        }
+        LocalDateTime min = Collections.min(inStatusCode1);
+        LocalDateTime max = Collections.max(inStatusCode2);
+        return timeDifferenceCalculation(min, max);
     }
 
-    public String howLongTaskInTesting(long taskId) {
-        Activity activityReadyForReview = handler.getRepository().findByTaskIdAndStatusCode(taskId, "ready_for_review");
-        Activity activityDone = handler.getRepository().findByTaskIdAndStatusCode(taskId, "done");
-        if(activityReadyForReview != null && activityDone != null) {
-            LocalDateTime developmentCompletion = activityReadyForReview.getDevelopmentCompletion();
-            LocalDateTime testingCompletion = activityDone.getDevelopmentCompletion();
-            return timeCounting(developmentCompletion, testingCompletion);
-        }
-        return "The task does not exist or it is in the testing stage";
-    }
-
-    private String timeCounting (LocalDateTime start, LocalDateTime end) {
-        long startMillis = start.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        long endMillis = end.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-
-        long resultMillis = endMillis - startMillis;
-        System.out.println(resultMillis);
-
-        LocalDateTime result = Instant.ofEpochMilli(resultMillis).atZone(ZoneId.systemDefault()).toLocalDateTime();
-        return "Month:" + (result.getMonth().getValue()-1) + ", Day:" + (result.getDayOfMonth()-1) + ", Hour:" + result.getHour() + ", Minute:" + result.getMinute();
+    private TimeTo timeDifferenceCalculation(LocalDateTime start, LocalDateTime end) {
+        Duration duration = Duration.between(start, end);
+        LocalDateTime result = LocalDateTime.ofInstant(Instant.ofEpochSecond(duration.toSeconds()), ZoneId.systemDefault());
+        TimeTo timeTo = new TimeTo();
+        timeTo.setMonth((result.getMonthValue()-1)+"");
+        timeTo.setDay((result.getDayOfMonth()-1)+"");
+        timeTo.setTime(result.toLocalTime());
+        return timeTo;
     }
 }
